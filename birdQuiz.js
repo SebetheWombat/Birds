@@ -1,4 +1,7 @@
-var commonAnswers = ["northern cardinal", "dark-eyed junco", "white-throated sparrow", "eastern towhee"];
+var commonAnswers = ["Northern cardinal", "Dark-eyed junco", "White-throated sparrow", "Eastern towhee", "Yellow warbler","Common yellowthroat",
+"Cedar waxwing", "Gray catbird","American robin","Hermit thrush","Brown creeper","House wren","Red-breasted nuthatch","Tufted titmouse",
+"Black-capped chickadee","Barn swallow","American crow","Blue jay","Pileated woodpecker","Killdeer"];
+var latinAnswers = [];
 var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardinal_1.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/dark_eyed_junco_10.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/white_throated_sparrow_2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/eastern_towhee_11.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/yellow_warbler_raymondlee2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/coye_joeldeyoung2.jpg",
@@ -12,6 +15,8 @@ var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardin
 
 var userAnswers = [];
 var pageTracker = -1;
+var score = 0;
+var commonQuiz = true;
 var NOCA = "In the Spring and early Summer this bird is so aggressive at defending its territory that it will spend hours fighting off intruders without giving up. It will even attack its own reflection!";
 var DEJU = "The oldest individual of this species was recorded as 11 years 4 months old upon its recapture and release.";
 var WTSP = "This bird will occasionally mate with the dark-eyed junco to produce hybrids.";
@@ -33,29 +38,55 @@ var BLJA = "The feathers of this bird are blue as a result of scattering light t
 var PIWO = "When foraging this bird will dig out rectangular holes in trees that are so extensive that smaller trees may break.";
 var KILL = "This bird defends its nest from predators by feigning a broken wing. The predator follows the \'injured\' bird away from the nest thinking it has found an easy meal.";
 
-var funFacts = [NOCA, DEJU, WTSP,EATO,YEWA,COYE,CEDW,GRCA,AMRO,HETH,BRCR,HOWR,RBNU,TUTI,BCCH,BARS,AMCR,BLJA,PIWO,KILL];
+var funFacts = [NOCA,DEJU,WTSP,EATO,YEWA,COYE,CEDW,GRCA,AMRO,HETH,BRCR,HOWR,RBNU,TUTI,BCCH,BARS,AMCR,BLJA,PIWO,KILL];
 
 $("input").keypress(function(e){
 	if(e.keyCode === 13){
-		userAnswers.push($("input").val().toLowerCase());
+		userAnswers.push($("input").val());
 		$("input").val("");
 		loadNext();
 	}
 });
 
 function loadNext(){
-	
 	pageTracker++;
 	var curQuest = "#" + (pageTracker + 1).toString();
 	var prevQuest = "#" + pageTracker.toString();
 	$("img").attr("src",birdPics[pageTracker]);
-	//$("#funFact p:").remove(text);
 	var texted = funFacts[pageTracker]
 	$("#funFact p:last").text(texted);
 	$(curQuest).addClass('active');
 	$(prevQuest).removeClass('active');
+	if(pageTracker === 20){
+		$("#funFact").remove();
+		$("#content").remove();
+		$("#sidebar").remove();
+		$("small").remove();
+		$("#group").prepend("<h1>Answer Key</h1>")
+		if(commonQuiz){
+			checkAns(userAnswers,commonAnswers);
+		}
+		else{
+			checkAns(userAnswers,latinAnswers);
+		}
+	}
 }
 
-$(document).ready(function(){
-	loadNext();
-});
+function checkAns(arr,cor){
+	for(var i = 0; i < arr.length; i++){
+		var userAns = arr[i].replace(/[\s\-]/g, "").toLowerCase();
+		var corAns = cor[i].replace(/[\s\-]/g, "").toLowerCase();
+		var classy = "";
+		if(userAns == corAns){
+			classy = "correct";
+			score++;
+			console.log(score);
+		}
+		else{
+			classy = "incorrect";
+		}
+		var toAdd = "<div class='" + classy + "'><p>Your Answer: " + userAnswers[i] + "</p><p>Correct Answer: " + commonAnswers[i] + "</p></div>";
+		$("#group").append(toAdd);
+	}
+}
+loadNext();

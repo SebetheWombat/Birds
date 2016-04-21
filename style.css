@@ -52,3 +52,17 @@ small{
 	bottom:1%;
 	left:30%;
 }
+button{
+	display:none;
+	position:absolute;
+	bottom:5%;
+	left:45%;
+	background:#dfd;
+	
+}
+.correct{
+	background:#dfd;
+}
+.incorrect{
+	background:#fdd;
+}
