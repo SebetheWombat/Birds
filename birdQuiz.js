@@ -60,8 +60,10 @@ function loadNext(){
 	if(pageTracker === 20){
 		$("#funFact").remove();
 		$("#content").remove();
-		$("#sidebar").remove();
+		$("#sidebar h1").remove();
+		$("table").remove();
 		$("small").remove();
+		$("#group").height("115em");
 		$("#group").prepend("<h1>Answer Key</h1>")
 		if(commonQuiz){
 			checkAns(userAnswers,commonAnswers);
@@ -88,5 +90,7 @@ function checkAns(arr,cor){
 		var toAdd = "<div class='" + classy + "'><p>Your Answer: " + userAnswers[i] + "</p><p>Correct Answer: " + commonAnswers[i] + "</p></div>";
 		$("#group").append(toAdd);
 	}
+	score = (score/arr.length) * 100;
+	$("#sidebar").append("<h1>Score: " + score + "%</h1>");
 }
 loadNext();
