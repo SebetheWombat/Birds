@@ -18,7 +18,7 @@ var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardin
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/american_crow_8.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/blue_jay_3.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/pileated_woodpecker_reidbarclay.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/killdeer_3.jpg"];
 
-var amroCall = new Audio('birdCalls/AMRO.mp3');
+var amroCall = new Audio('https://dl.dropboxusercontent.com/s/j02dparud9g9mre/AMRO.mp3?dl=0');
 var hethCall = new Audio('birdCalls/HETH.mp3');
 var bcchCall = new Audio('birdCalls/BCCH.mp3');
 var coyeCall = new Audio('birdCalls/COYE.mp3');
@@ -33,8 +33,8 @@ var brcrCall = new Audio('birdCalls/BRCR.mp3');
 var howrCall = new Audio('birdCalls/HOWR.mp3');
 var rbnuCall = new Audio('birdCalls/RBNU.mp3');
 var tutiCall = new Audio('birdCalls/TUTI.mp3');
-var barsCall = new Audio('birdCalls/BARS.mp3');
-var amcrCall = new Audio('birdCalls/AMCR.mp3');
+var barsCall = new Audio('https://dl.dropboxusercontent.com/s/jo5dgxwgokc3n41/BARS.mp3?dl=0');
+var amcrCall = new Audio('https://dl.dropboxusercontent.com/s/zahw2z3i3jrd0ap/AMCR.mp3?dl=0');
 var bljaCall = new Audio('birdCalls/BLJA.mp3');
 var piwoCall = new Audio('birdCalls/PIWO.mp3');
 var killCall = new Audio('birdCalls/KILL.mp3');
