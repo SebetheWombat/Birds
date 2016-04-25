@@ -1,7 +1,12 @@
 var commonAnswers = ["Northern cardinal", "Dark-eyed junco", "White-throated sparrow", "Eastern towhee", "Yellow warbler","Common yellowthroat",
 "Cedar waxwing", "Gray catbird","American robin","Hermit thrush","Brown creeper","House wren","Red-breasted nuthatch","Tufted titmouse",
 "Black-capped chickadee","Barn swallow","American crow","Blue jay","Pileated woodpecker","Killdeer"];
-var latinAnswers = [];
+var commonAnswersRelaxed = ["Cardinal", "Junco", "Sparrow", "Towhee", "Yellow warbler","Common yellowthroat",
+"Cedar waxwings", "catbird","Robin","Thrush","Brown creeper","Wren","Nuthatch","Titmouse",
+"Chickadee","Swallow","Crow","Blue jay","Woodpecker","Killdeer"];
+var latinAnswers = ["Cardinalis cardinalis", "Junco hyemalis", "Zonotrichia albicollis","Pipilo erythrophthalmus","Setophaga petechia","Geothlypis trichas",
+"Bombycilla cedrorum","Dumetella carolinensis","Turdus migratorius","Catharus guttatus","Certhia americana","Troglodytes aedon","Sitta canadensis",
+"Baeolophus bicolor","Poecile atricapillus","Hirundo rustica","Corvus brachyrhynchos","Cyanocitta cristata","Dryocopus pileatus","Dryocopus pileatus"];
 var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardinal_1.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/dark_eyed_junco_10.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/white_throated_sparrow_2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/eastern_towhee_11.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/yellow_warbler_raymondlee2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/coye_joeldeyoung2.jpg",
@@ -12,6 +17,28 @@ var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardin
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/black_capped_chickadee_3.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/barn_swallow_8.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/american_crow_8.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/blue_jay_3.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/pileated_woodpecker_reidbarclay.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/killdeer_3.jpg"];
+
+var amroCall = new Audio('birdCalls/AMRO.mp3');
+var hethCall = new Audio('birdCalls/HETH.mp3');
+var bcchCall = new Audio('birdCalls/BCCH.mp3');
+var coyeCall = new Audio('birdCalls/COYE.mp3');
+var grcaCall = new Audio('birdCalls/GRCA.mp3');
+var wtspCall = new Audio('birdCalls/WTSP.mp3');
+var yewaCall = new Audio('birdCalls/YEWA.mp3');
+var nocaCall = new Audio('birdCalls/NOCA.mp3');
+var dejuCall = new Audio('birdCalls/DEJU.mp3');
+var eatoCall = new Audio('birdCalls/EATO.mp3');
+var cedwCall = new Audio('birdCalls/CEDW.mp3');
+var brcrCall = new Audio('birdCalls/BRCR.mp3');
+var howrCall = new Audio('birdCalls/HOWR.mp3');
+var rbnuCall = new Audio('birdCalls/RBNU.mp3');
+var tutiCall = new Audio('birdCalls/TUTI.mp3');
+var barsCall = new Audio('birdCalls/BARS.mp3');
+var amcrCall = new Audio('birdCalls/AMCR.mp3');
+var bljaCall = new Audio('birdCalls/BLJA.mp3');
+var piwoCall = new Audio('birdCalls/PIWO.mp3');
+var killCall = new Audio('birdCalls/KILL.mp3');
+var calls = [nocaCall,dejuCall,wtspCall,eatoCall,yewaCall,coyeCall,cedwCall,grcaCall,amroCall,hethCall,brcrCall,howrCall,rbnuCall,tutiCall,bcchCall,barsCall,amcrCall,bljaCall,piwoCall,killCall];
 
 var userAnswers = [];
 var pageTracker = -1;
@@ -44,11 +71,15 @@ $("input").keypress(function(e){
 	if(e.keyCode === 13){
 		userAnswers.push($("input").val());
 		$("input").val("");
+		if(pageTracker > -1){
+			calls[pageTracker].pause();
+		}
 		loadNext();
 	}
 });
 
 function loadNext(){
+
 	pageTracker++;
 	var curQuest = "#" + (pageTracker + 1).toString();
 	var prevQuest = "#" + pageTracker.toString();
@@ -57,6 +88,11 @@ function loadNext(){
 	$("#funFact p:last").text(texted);
 	$(curQuest).addClass('active');
 	$(prevQuest).removeClass('active');
+	if(pageTracker < 20){
+		calls[pageTracker].play();
+	}
+	
+	
 	if(pageTracker === 20){
 		$("#funFact").remove();
 		$("#content").remove();
@@ -66,7 +102,7 @@ function loadNext(){
 		$("#group").height("115em");
 		$("#group").prepend("<h1>Answer Key</h1>")
 		if(commonQuiz){
-			checkAns(userAnswers,commonAnswers);
+			checkAns(userAnswers,commonAnswers,commonAnswersRelaxed);
 		}
 		else{
 			checkAns(userAnswers,latinAnswers);
@@ -74,12 +110,15 @@ function loadNext(){
 	}
 }
 
-function checkAns(arr,cor){
+function checkAns(arr,cor,corRel){
 	for(var i = 0; i < arr.length; i++){
 		var userAns = arr[i].replace(/[\s\-]/g, "").toLowerCase();
 		var corAns = cor[i].replace(/[\s\-]/g, "").toLowerCase();
+		if(arguments.length === 3){
+			var corAnsRel = corRel[i].replace(/[\s\-]/g, "").toLowerCase();
+		}
 		var classy = "";
-		if(userAns == corAns){
+		if(userAns == corAns || userAns == corAnsRel){
 			classy = "correct";
 			score++;
 			console.log(score);
