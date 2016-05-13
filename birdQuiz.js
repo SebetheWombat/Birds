@@ -67,10 +67,17 @@ var KILL = "This bird defends its nest from predators by feigning a broken wing.
 
 var funFacts = [NOCA,DEJU,WTSP,EATO,YEWA,COYE,CEDW,GRCA,AMRO,HETH,BRCR,HOWR,RBNU,TUTI,BCCH,BARS,AMCR,BLJA,PIWO,KILL];
 
-$("input").keypress(function(e){
+function chooseLevel(){
+	$('input').click(function(){
+		$("#popup").hide();
+	});
+}
+//Pushes users answer to array and loads next question
+$("#bird").keypress(function(e){
 	if(e.keyCode === 13){
-		userAnswers.push($("input").val());
-		$("input").val("");
+		userAnswers.push($("#bird").val());
+		$("#bird").val("");
+		//Stops previous birdcall
 		if(pageTracker > -1){
 			calls[pageTracker].pause();
 		}
@@ -79,20 +86,24 @@ $("input").keypress(function(e){
 });
 
 function loadNext(){
-
+	if($("#latin:checked").length > 0){
+		commonQuiz = false;
+	}
 	pageTracker++;
 	var curQuest = "#" + (pageTracker + 1).toString();
 	var prevQuest = "#" + pageTracker.toString();
 	$("img").attr("src",birdPics[pageTracker]);
 	var texted = funFacts[pageTracker]
 	$("#funFact p:last").text(texted);
+	//Used for green border around current question
 	$(curQuest).addClass('active');
 	$(prevQuest).removeClass('active');
+	//Starts birdcall
 	if(pageTracker < 20){
 		calls[pageTracker].play();
 	}
 	
-	
+	//After final question display answersheet
 	if(pageTracker === 20){
 		$("#funFact").remove();
 		$("#content").remove();
@@ -109,14 +120,16 @@ function loadNext(){
 		}
 	}
 }
-
+//Compares user answers with correct answer array
 function checkAns(arr,cor,corRel){
 	for(var i = 0; i < arr.length; i++){
+		//Ignores spaces, hyphans, and is case insensitive
 		var userAns = arr[i].replace(/[\s\-]/g, "").toLowerCase();
 		var corAns = cor[i].replace(/[\s\-]/g, "").toLowerCase();
 		if(arguments.length === 3){
 			var corAnsRel = corRel[i].replace(/[\s\-]/g, "").toLowerCase();
 		}
+		//Keeps track of correct answers for styling and score
 		var classy = "";
 		if(userAns == corAns || userAns == corAnsRel){
 			classy = "correct";
@@ -126,10 +139,11 @@ function checkAns(arr,cor,corRel){
 		else{
 			classy = "incorrect";
 		}
-		var toAdd = "<div class='" + classy + "'><p>Your Answer: " + userAnswers[i] + "</p><p>Correct Answer: " + commonAnswers[i] + "</p></div>";
+		var toAdd = "<div class='" + classy + "'><p>Your Answer: " + arr[i] + "</p><p>Correct Answer: " + cor[i] + "</p></div>";
 		$("#group").append(toAdd);
 	}
-	score = (score/arr.length) * 100;
+	score = ((score/arr.length) * 100).toFixed();
 	$("#sidebar").append("<h1>Score: " + score + "%</h1>");
 }
+chooseLevel();
 loadNext();
