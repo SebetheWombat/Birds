@@ -6,7 +6,7 @@ var commonAnswersRelaxed = ["Cardinal", "Junco", "Sparrow", "Towhee", "Yellow wa
 "Chickadee","Swallow","Crow","Blue jay","Woodpecker","Killdeer"];
 var latinAnswers = ["Cardinalis cardinalis", "Junco hyemalis", "Zonotrichia albicollis","Pipilo erythrophthalmus","Setophaga petechia","Geothlypis trichas",
 "Bombycilla cedrorum","Dumetella carolinensis","Turdus migratorius","Catharus guttatus","Certhia americana","Troglodytes aedon","Sitta canadensis",
-"Baeolophus bicolor","Poecile atricapillus","Hirundo rustica","Corvus brachyrhynchos","Cyanocitta cristata","Dryocopus pileatus","Dryocopus pileatus"];
+"Baeolophus bicolor","Poecile atricapillus","Hirundo rustica","Corvus brachyrhynchos","Cyanocitta cristata","Dryocopus pileatus","Charadrius vociferus"];
 var birdPics = ["https://www.allaboutbirds.org/guide/PHOTO/LARGE/northern_cardinal_1.jpg", "https://www.allaboutbirds.org/guide/PHOTO/LARGE/dark_eyed_junco_10.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/white_throated_sparrow_2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/eastern_towhee_11.jpg",
 "https://www.allaboutbirds.org/guide/PHOTO/LARGE/yellow_warbler_raymondlee2.jpg","https://www.allaboutbirds.org/guide/PHOTO/LARGE/coye_joeldeyoung2.jpg",
